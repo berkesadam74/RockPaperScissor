@@ -9,6 +9,20 @@
 <body>
     <script>
         //- Get players choice. 
+        function getPlayersChoice(){
+            let playersChoice;
+            let x = true;
+                while(x){
+                    playersChoice = prompt("Choose yours:");
+                    playersChoice = playersChoice.toLowerCase();
+                    if(playersChoice === "rock" || playersChoice === "paper" || playersChoice === "scissors"){
+                        x = false;
+                    }else{
+                        console.log("Please choose between PAPER, ROCK or SCISSORS.");
+                    }
+                }
+                return playersChoice;
+        }
         //- Generate random computer choice
         function getComputersChoice(){
             let choice;
@@ -28,7 +42,7 @@
             const player = playersChoice.toLowerCase();
             const computer = ComputersChoice.toLowerCase();
             if(player === computer){
-                return "It's a DRAW";
+                return "It's a DRAW nobody get's a point.";
             }else{
                 if(player === "rock" && computer === "paper"){
                     return "You LOST, PAPER beats ROCK!";
@@ -47,9 +61,33 @@
                 }
             }
         }
-        //- Check if somebody reached 5 wins if yes -> determine who won , if no -> play game again
+        //- Play 5 rounds
+        function game(){
+            let playerScore = 0;
+            let computerScore = 0;
+            for(let i = 0; i < 5; i++){
+                let playersChoice = getPlayersChoice();
+                const computersChoice = getComputersChoice();
+                console.log(`Players choice is: ${playersChoice} and computers choice is: ${computersChoice}`)
+                const playGame = play(playersChoice, computersChoice);
+                if(playGame[4] === "W"){
+                    playerScore += 1;
+                }else if(playGame[4] === "L"){
+                    computerScore += 1;
+                }
+                console.log(playGame);
+            }
+            if(playerScore > computerScore){
+                console.log(`You won!!!! The score is ${playerScore}:${computerScore}`);
+            }else if(playerScore < computerScore){
+                console.log(`You lost ... The score is: ${playerScore}:${computerScore}`);
+            }else{
+                console.log(`It's a draw! Try again! The score is: ${playerScore}:${computerScore}`);
+            }
+        }
         //- Start new game
-        console.log(play("ROCK", getComputersChoice()));
+        
+        game();
     </script>
 </body>
 </html>
